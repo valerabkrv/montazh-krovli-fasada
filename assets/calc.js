@@ -27,7 +27,7 @@ function calcChip(name, value, label, checked, sub) {
 function calcQty(x) {
   var n = keyPrice(x.key);
   return '<label class="calc-extra"><span class="calc-extra-name">' + esc(x.label) +
-      '<small>' + (n !== null ? fmt(n) + ' ' + esc(unitText(x.unit)) : 'цена по запросу') + '</small></span>' +
+      '<small>' + (n !== null ? 'от ' + fmt(n) + ' ' + esc(unitText(x.unit)) : 'цена по запросу') + '</small></span>' +
     '<span class="calc-qty"><input type="number" inputmode="numeric" min="0" max="9999" step="1" value="0"' +
       ' data-extra="' + esc(x.key) + '" data-unit="' + esc(x.unit) + '" data-label="' + esc(x.label) + '"' +
       ' aria-label="' + esc(x.label) + ', ' + esc(x.unit) + '"><em>' + esc(x.unit) + '</em></span></label>';
@@ -89,9 +89,9 @@ function renderCalc(hostId, cfg) {
 
       '<aside class="calc-result" aria-live="polite">' +
         '<p class="calc-result-label">Стоимость работ</p>' +
-        '<p class="calc-total"><b data-total>0</b> ' + esc(MN_UNIT) + '</p>' +
+        '<p class="calc-total">от <b data-total>0</b> ' + esc(MN_UNIT) + '</p>' +
         '<ul class="calc-lines" data-lines></ul>' +
-        '<p class="calc-note">Расчёт по ценам прайса, без материалов. Точную смету посчитаем после замера.</p>' +
+        '<p class="calc-note">Ориентир по ценам «от» из прайса, без материалов. Точную смету посчитаем после замера.</p>' +
         '<a class="btn calc-cta" href="tel:' + MN_TEL + '">Записаться на замер</a>' +
         '<a class="btn-outline calc-cta" href="#contacts">Адреса и телефоны</a>' +
       '</aside>' +
@@ -188,7 +188,7 @@ function calcUpdate() {
   function chipPrice(name, id, key) {
     var s = CALC.querySelector('input[name="' + name + '"][value="' + id + '"] + span small');
     var n = keyPrice(key);
-    if (s) s.textContent = n !== null ? fmt(n) + ' ' + unitText('м²') : '';
+    if (s) s.textContent = n !== null ? 'от ' + fmt(n) + ' ' + unitText('м²') : '';
   }
   CALC_CFG.roof.coverings.forEach(function (c) { chipPrice('mn-roof-cover', c.id, full ? c.full : c.cover); });
   CALC_CFG.facade.claddings.forEach(function (c) { chipPrice('mn-fac-clad', c.id, c.key); });

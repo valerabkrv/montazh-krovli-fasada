@@ -11,8 +11,8 @@ var MN_BASE = (typeof window !== 'undefined' && typeof window.MN_ASSET_BASE === 
 var MN_UNIT = '₽';
 var MN_PHONE = '+7 912 479-52-23';
 var MN_TEL = '+79124795223';
-var MN_NOTE = 'Цены — за работу, без материалов. Итоговая сумма зависит от сложности ' +
-  'кровли или фасада и считается по смете после замера.';
+var MN_NOTE = 'Цены — за работу, без материалов. «От» — минимальная цена по прайсу: ' +
+  'итог зависит от сложности кровли или фасада и считается после замера.';
 
 var PRICE_INDEX = {};   // ключ работы -> строка прайса (label, unit, price)
 var MODEL_INDEX = {};   // slug -> карточка
@@ -75,7 +75,7 @@ function keyPrice(key) {
   return r ? priceNum(r.price) : null;
 }
 
-/* Самая низкая цена карточки среди строк с её единицей — её показываем на плитке */
+/* Самая низкая цена карточки среди строк с её единицей — для «от …» */
 function minPrice(m) {
   var best = null;
   (m.rows || []).forEach(function (r) {
@@ -90,16 +90,16 @@ function unitText(u) { return MN_UNIT + '/' + u; }
 function priceHtml(m) {
   var p = minPrice(m);
   if (p === null) return '<span class="price price-ask">Цена по запросу</span>';
-  return '<span class="price">' + fmt(p) + ' <small>' + esc(unitText(m.unit)) + '</small></span>';
+  return '<span class="price">от ' + fmt(p) + ' <small>' + esc(unitText(m.unit)) + '</small></span>';
 }
 
-/* Подпись под ценой: вторая цена («под ключ — 2 300 ₽/м²»), своя подпись
+/* Подпись под ценой: вторая цена («под ключ — от …»), своя подпись
    или число видов работ в карточке. Цена с единицей не переносится:
    иначе на телефоне «₽/» остаётся на строке, а «м²» уезжает на следующую. */
 function metaHtml(m) {
   if (m.sub) {
     var n = keyPrice(m.sub.key);
-    if (n !== null) return esc(m.sub.label) + ' — <span class="mn-nw">' + fmt(n) + ' ' +
+    if (n !== null) return esc(m.sub.label) + ' — <span class="mn-nw">от ' + fmt(n) + ' ' +
       esc(unitText(PRICE_INDEX[m.sub.key].unit)) + '</span>';
   }
   if (m.meta) return esc(m.meta);
@@ -202,7 +202,7 @@ function priceRowsHtml(rows) {
     var n = priceNum(r.price);
     return '<tr><td class="mod-name">' + esc(r.label) + '</td>' +
       '<td class="mn-unit">' + esc(r.unit) + '</td>' +
-      '<td class="mod-price">' + (n !== null ? fmt(n) + ' ' + esc(MN_UNIT) : 'по запросу') + '</td></tr>';
+      '<td class="mod-price">' + (n !== null ? 'от ' + fmt(n) + ' ' + esc(MN_UNIT) : 'по запросу') + '</td></tr>';
   }).join('');
 }
 
@@ -238,7 +238,7 @@ function modelDetailHtml(key) {
         '<div class="collection-title-row">' +
           '<h3 class="section-title collection-title" style="font-size:22px">' + esc(m.name) + '</h3>' +
           (p !== null
-            ? '<div class="collection-price"><span>' + fmt(p) + '</span> ' + esc(unitText(m.unit)) + '</div>'
+            ? '<div class="collection-price">от <span>' + fmt(p) + '</span> ' + esc(unitText(m.unit)) + '</div>'
             : '') +
         '</div>' +
         '<p class="section-sub">' + esc(m.desc) + '</p>' +
@@ -382,7 +382,7 @@ function routeHash(h, scroll) {
 }
 
 /* Цены в тексте страницы (первый экран): <b data-from="<карточка>"> получает
-   её минимальную цену — правка в MN_PRICES меняет и плитки, и шапку. */
+   её «от» — правка в MN_PRICES меняет и плитки, и шапку. */
 function fillFromPrices() {
   var root = document.querySelector('.mn') || document;
   Array.prototype.forEach.call(root.querySelectorAll('[data-from]'), function (el) {
