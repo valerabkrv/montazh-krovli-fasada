@@ -1177,7 +1177,7 @@ html{scroll-behavior: smooth;}
       </div>
       <div class="hero-v2-stock">
         <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11h14V9"/><path d="M10 20v-6h4v6"/></svg>
-        <span>Металлочерепица — <span class="mn-hero-price"><b data-from="metallocherepica">1 000</b> ₽/м²</span><br>Сайдинг — <span class="mn-hero-price"><b data-from="sayding">500</b> ₽/м²</span></span>
+        <span>Кровля — <span class="mn-hero-price">от <b data-from="metallocherepica">1 000</b> ₽/м²</span><br>Фасад — <span class="mn-hero-price">от <b data-from="sayding">500</b> ₽/м²</span></span>
       </div>
     </div>
   </div>
@@ -1209,7 +1209,7 @@ html{scroll-behavior: smooth;}
 <section id="prices">
   <div class="container">
     <h2 class="section-title">Цены на монтаж</h2>
-    <p class="section-sub">Две вкладки — кровля и фасад. Нажмите на карточку: откроется прайс по виду работ. Цены — за работу, без материалов.</p>
+    <p class="section-sub">Две вкладки — кровля и фасад. Нажмите на карточку: откроется прайс по виду работ. Все цены — «от», за работу без материалов.</p>
     <div id="catalog-grid"></div>
     <p class="model-note mn-prices-note">Итог зависит от сложности кровли или фасада, этажности и количества узлов — точную сумму назовём после замера. Материалы подберём и продадим в наших офисах, чтобы кровля и фасад были из одних рук.</p>
   </div>
@@ -1339,8 +1339,8 @@ html{scroll-behavior: smooth;}
    справа: было "1 000" — стало "1 100". Название слева, двоеточие
    и запятую в конце строки не трогайте.
 
-   На плитке показывается самая низкая цена карточки, в окне — цена
-   каждой работы, в калькуляторе — расчёт по этим же ценам.
+   Все цены на сайте показываются с «от»: на плитке — самая низкая
+   цена карточки, в окне — цена каждой работы, в калькуляторе — расчёт.
    Пустые кавычки ""  — «по запросу».
    После правки в Тильде: «Сохранить и закрыть» -> «Опубликовать».
    ================================================================== */
@@ -1415,6 +1415,6 @@ function start() {
   fillFromPrices();
   initCatalog();
 }
-load("https://valerabkrv.github.io/montazh-krovli-fasada/assets/data.js?v=2", function(){ load("https://valerabkrv.github.io/montazh-krovli-fasada/assets/site.js?v=2", function(){ load("https://valerabkrv.github.io/montazh-krovli-fasada/assets/calc.js?v=2", function(){ start(); }); }); });
+load("https://valerabkrv.github.io/montazh-krovli-fasada/assets/data.js?v=1", function(){ load("https://valerabkrv.github.io/montazh-krovli-fasada/assets/site.js?v=1", function(){ load("https://valerabkrv.github.io/montazh-krovli-fasada/assets/calc.js?v=1", function(){ start(); }); }); });
 </script>
 </div>
